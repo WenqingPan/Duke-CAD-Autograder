@@ -59,15 +59,20 @@ def grade():
     rot_error=int(request.form["rotationError"])
     correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
     student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
-
+    print("thresh")
+    print(thresh)
     
     dic = {}
 
+
     for file in student_files:
         for cfile in correct_files:
-            dic[file] = grade(student_files[file], correct_files[cfile], verbose, thresh,extra_ent_penalty, 
-            hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
+            mistakes = []
+            result = grade(student_files[file], correct_files[cfile], verbose, thresh,extra_ent_penalty, 
+            hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error, mistakes)
+            dic[file] = [result, mistakes]
 
+    #print(dic)
 
     response = flask.jsonify(dic)
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -404,7 +409,7 @@ def scale(entity_dict, factor):
     return ents
 
 # The function that takes two entity dictionaries and compares them to produce a grade
-def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty):
+def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, mistakes):
 #    the threshold for how similar two values must be to be considered the same
     ent_count = 0
     missing_ents = 0
@@ -474,6 +479,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not lin_flag:
+                mistakes.append(["missing Line", lin_c])
                 print("missing Line: ",lin_c)
             else:
                 if verbose==2:
@@ -485,6 +491,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         if lin_s not in student_lines:
             extra_ents = extra_ents + 1
             if verbose!=0:
+                mistakes.append(["extra Line: ",lin_s])
                 print("extra Line: ",lin_s)
     while extra_ents != 0 and lin_flags !=0:
         extra_ents = extra_ents -1
@@ -537,6 +544,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not arc_flag:
+                mistakes.append(["missing Arc: ",arc_c])
                 print("missing Arc: ",arc_c)
             else:
                 if verbose==2:
@@ -548,6 +556,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         if arc_s not in student_arcs:
             extra_ents = extra_ents +1
             if verbose!=0:
+                mistakes.append(["extra Arc: ",arc_s])
                 print("extra Arc: ",arc_s)
     while extra_ents != 0 and arc_flags !=0:
         extra_ents = extra_ents -1
@@ -610,6 +619,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not cir_flag:
+                mistakes.append(["missing Circle: ",cir_c])
                 print("missing Circle: ",cir_c)
             else:
                 if verbose==2:
@@ -619,6 +629,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         if cir_s not in student_circs:
             extra_ents = extra_ents +1
             if verbose!=0:
+                mistakes.append(["extra Circle: ",cir_s])
                 print("extra Circle: ",cir_s)
     while extra_ents != 0 and circ_flags !=0:
         extra_ents = extra_ents -1
@@ -691,6 +702,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not ell_flag:
+                mistakes.append(["missing Ellipse: ",ell_c])
                 print("missing Ellipse: ",ell_c)
             else:
                 if verbose==2:
@@ -700,6 +712,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         if ell_s not in student_ellipses:
             extra_ents = extra_ents +1
             if verbose!=0:
+                mistakes.append(["extra Ellipse: ",ell_s])
                 print("extra Ellipse: ",ell_s)
     while extra_ents != 0 and ell_flags !=0:
         extra_ents = extra_ents -1
@@ -746,16 +759,19 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                     break
             if verbose!=0:
                 if not samePattern:
+                    mistakes.append(["missing pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"]])
                     print("missing pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"])
                 else:
                     if verbose == 2:
                         print("found pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"])
                 if not samePattern:
+                    mistakes.append(["missing color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"]])
                     print("missing color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"])
                 else:
                     if verbose == 2:
                         print("found color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"])
                 if not pat_flag:
+                    mistakes.append(["missing Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c]])
                     print("missing Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c])
                 else:
                     if verbose==2:
@@ -765,6 +781,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         for path_s in entities_student["Hatches"][hatch_s]:
             if path_s not in student_hatches:
                 if verbose!=0:
+                    mistakes.append(["extra Hatch Area: ",entities_student["Hatches"][hatch_s][path_s]])
                     print("extra Hatch Area: ",entities_student["Hatches"][hatch_s][path_s])
 #    no negative grades, and return a percentage]
     if rotations/ln_count >.50:
@@ -774,7 +791,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
 
 # function to grade two dxf files
 
-def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error):
+def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error, mistakes):
     possible_angles = []
     maxScore=0
     correctFactor = 0
@@ -788,7 +805,7 @@ def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_er
     for factor in factors:
         if factor != 0:
             stu_ents = scale(student_ents, factor)
-            score, rot  = (grade_ents(stu_ents, correct_ents, factor, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty))
+            score, rot  = (grade_ents(stu_ents, correct_ents, factor, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, mistakes))
         if score> maxScore and score<101:
             maxScore = score
             correctFactor = factor
