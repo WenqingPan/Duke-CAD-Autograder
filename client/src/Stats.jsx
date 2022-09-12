@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom'
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { ListGroup } from 'react-bootstrap';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import image from "./garden2.png"
 const Stats = () => {
     const { state } = useLocation();
     //a list of student scores
@@ -22,7 +23,7 @@ const Stats = () => {
         }
         if (currGrade > maxGrade) {
             filenameWithHighestScore = [key]
-            minGrade = currGrade
+            maxGrade = currGrade
         } else if (currGrade === maxGrade) {
             filenameWithHighestScore.push(key);
         }
@@ -62,23 +63,30 @@ const Stats = () => {
         data.push({ range: "" + i + "-" + (i + 5), freq: 0 })
     }
     grade.forEach(score => {
-        const index = (score - minGrade) / 5;
+        const index = parseInt((score - minGrade) / 5);
+        console.log(index)
         data[index]['freq'] = data[index]['freq'] + 1
+        console.log(data[index]['freq'])
     });
     let freqList = []
     for (const [key, value] of mistakes) {
-        freqList.push(<ListGroup.Item style={{ display: 'flex', justifyContent: 'space-between' }}><div>{key}:</div><div> {value} people</div></ListGroup.Item>)
+        freqList.push(<ListGroup.Item style={{ display: 'flex', justifyContent: 'space-between' }}><div>{key}</div><div> {value} people</div></ListGroup.Item>)
     }
 
 
     return (
-        <Container className="mt-3 mb-3">
-            <Row style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button style={{ paddingLeft: '20px', paddingRight: '20px', background: "#012169", borderRadius: "12px", marginBottom: '20px', width: 'auto' }}>
-                    Grade Distribution
-                </Button>
-
-            </Row>
+        <div>
+            <Container className="mt-3 mb-3">
+                <Row>
+                    <Col style={{ display: 'flex', justifyContent: 'center', margin: "5px" }}>
+                        <h1 style={{ color: "white", marginTop: '30px' }}>CAD Autograder</h1>
+                    </Col>
+                </Row>
+                <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Col style={{ display: 'flex', justifyContent: 'center'}} >
+                            <h3 style={{ marginLeft: '5px', color: "white" }}> Grade Distribution</h3>
+                    </Col>
+                </Row>
             <Row>
                 <Col>
                     <Row>
@@ -93,7 +101,7 @@ const Stats = () => {
                         </Card>
 
                     </Row>
-                    <Row className="mt-5">
+                    <Row className="mt-5 mb-5">
                         <Card style={{ width: '30rem' }}>
                             <Card.Header style={{ display: 'flex', justifyContent: 'center' }}>Most Common Mistakes</Card.Header>
                             <ListGroup>
@@ -115,9 +123,9 @@ const Stats = () => {
                             bottom: 5,
                         }}>
                             <Bar dataKey="freq" fill="#012169" />
-                            <CartesianGrid stroke="#ccc" />
-                            <XAxis dataKey="range" />
-                            <YAxis />
+                            <CartesianGrid stroke="grey" />
+                            <XAxis dataKey="range" stroke="white" />
+                            <YAxis stroke="white" />
                         </BarChart>
 
                     </Row>
@@ -125,7 +133,7 @@ const Stats = () => {
                 </Col>
             </Row>
         </Container>
-
+        </div >
 
 
 

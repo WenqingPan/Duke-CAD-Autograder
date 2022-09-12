@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import image from "./garden2.png"
 
 
 const Assignment = () => {
     const [studentFile, setStudentFile] = useState([])
     const [correctFile, setCorrectFile] = useState([])
-    const [accuracyThreshold, setAccuracyThreshold] = useState(0)
+    const [accuracyThreshold, setAccuracyThreshold] = useState(1)
     const [extraEntities, setExtraEntities] = useState(0)
     const [coloringError, setColoringError] = useState(0)
     const [lineweightError, setLineweightError] = useState(0)
@@ -59,8 +60,26 @@ const Assignment = () => {
     const onHatchChange = event => {
         setHatchError(event.target.value)
     }
-    const renderTooltip = props => (
-        <Tooltip {...props}>Tooltip for the register button</Tooltip>
+    const renderTooltipAccuracy = props => (
+        <Tooltip {...props}>Decimal precision when comparing drawings</Tooltip>
+    );
+    const renderTooltipHatch = props => (
+        <Tooltip {...props}>Area is not correctly hatched</Tooltip>
+    );
+    const renderTooltipColor = props => (
+        <Tooltip {...props}>Color of the object is not matched</Tooltip>
+    );
+    const renderTooltipScale = props => (
+        <Tooltip {...props}>Drawing scale does not match</Tooltip>
+    );
+    const renderTooltipLineweight = props => (
+        <Tooltip {...props}>Thickness of the object is not matched</Tooltip>
+    );
+    const renderTooltipExtraEntities = props => (
+        <Tooltip {...props}>Extra entities exist</Tooltip>
+    );
+    const renderTooltipRotate = props => (
+        <Tooltip {...props}>Drawing is incorrectly rotated</Tooltip>
     );
 
 
@@ -92,9 +111,8 @@ const Assignment = () => {
 
 
 
-        axios.post("http://localhost:5000/grade", formData)
+        axios.post("/grade", formData)
             .then(res => {
-                console.log(res.data)
                 navigate("/result", { state: res.data });
             })
             .catch(error => {
@@ -102,69 +120,62 @@ const Assignment = () => {
             });
     }
     return (
-        <Form>
-
-            <Container>
+ <div>
+            <Container >
                 <Row>
                     <Col style={{ display: 'flex', justifyContent: 'center', margin: "5px" }}>
-                        <h1 style={{ color: "#012169" }}>CAD Autograder</h1>
+                        <h1 style={{ color: "white", marginTop: '30px'}}>CAD Autograder</h1>
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Form.Group controlId="formFileLg" className="m-3" style={{ justifyContent: 'center' }}>
-                            <Form.Label htmlFor="filename" style={{ background: "#012169", color: "white", padding: "8px 12px", borderRadius: "12px", marginBottom: '0px' }}>Click to choose a folder for student files:</Form.Label>
-                            <p style={{ color: "green", visibility: (studentFileStatus ? "visible" : "hidden") }}>{studentFile.length} files uploaded successfully!</p>
-                            <Form.Control type="file" value="" directory="" webkitdirectory="" onChange={onStudentFileChange} id="filename" style={{ visibility: "hidden" }} />
-
+                    <Col md={{ span: 6, offset: 3 }} style={{ display: 'flex', justifyContent: 'left', alignItems: 'center' }}>
+                        <Form.Group style={{ display: 'flex', justifyContent: 'left', alignItems: 'center'}}>
+                        <Form.Control type="file" value="" id="" style={{ visibility: "hidden", maxHeight: '1px !important', maxWidth: '1px !important'}} />   
+                        <p style={{ margin: "5px", color: "#90EE90", visibility: "hidden", whiteSpace: 'nowrap' }}>success!</p>         
+                            <Form.Label htmlFor="filename2" style={{
+                                background: "#012169", color: "white", padding: "8px 12px", borderRadius: "12px", marginBottom: '5px', whiteSpace: 'nowrap',
+                                textAlign: 'center'
+                            }}>Select Solution File:</Form.Label><br/>
+                            <p style={{ margin: "5px", color: "white", visibility: (correctFileStatus ? "visible" : "hidden"), whiteSpace: 'nowrap' }}>success!</p>
+                            <Form.Control type="file" value="" onChange={onCorrectFileChange} id="filename2" style={{ visibility: "hidden", maxHeight: '1px !important', maxWidth: '1px !important'}} />            
                         </Form.Group>
-
                     </Col>
-                    <Col style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Form.Group controlId="formFileLg" className="m-3">
-                            <Form.Label htmlFor="filename2" style={{ background: "#012169", color: "white", padding: "8px 12px", borderRadius: "12px", marginBottom: '0px' }}>Click to choose a folder for correct file:</Form.Label>
-                            <p style={{ color: "green", visibility: (correctFileStatus ? "visible" : "hidden") }}>{correctFile.length} files uploaded successfully!</p>
-                            <Form.Control type="file" value="" directory="" webkitdirectory="" onChange={onCorrectFileChange} id="filename2" style={{ visibility: "hidden" }} />
+                </Row><Row>
 
+                    <Col style={{ display: 'flex', justifyContent: 'left', alignItems: 'center' }}>
+                        <Form.Group style={{ display: 'flex', justifyContent: 'left', alignItems: 'center' }}>
+                        <Form.Control type="file" value="" directory="" webkitdirectory="" id="" style={{ visibility: "hidden", maxHeight: '1px !important', maxWidth: '1px !important' }} />
+                        <p style={{ margin: "5px", color: "#90EE90", visibility: "hidden", whiteSpace: 'nowrap' }}>{studentFile.length} files uploaded successfully!</p>
+                            <Form.Label htmlFor="filename" style={{
+                                background: "#012169", color: "white", padding: "8px 12px", borderRadius: "12px", marginBottom: '5px', whiteSpace: 'nowrap',
+                                textAlign: 'center'
+                            }}>Select Students' Files Directory:</Form.Label>
+                            <br/>
+                            <p style={{ margin: "5px", color: "white", visibility: (studentFileStatus ? "visible" : "hidden"), whiteSpace: 'nowrap' }}>{studentFile.length} files uploaded successfully!</p>
+                            <Form.Control type="file" value="" directory="" webkitdirectory="" onChange={onStudentFileChange} id="filename" style={{ visibility: "hidden", maxHeight: '1px !important', maxWidth: '1px !important' }} />
                         </Form.Group>
-
                     </Col>
                 </Row>
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                        <Button style={{ background: "#012169", borderRadius: "10px", marginLeft: "0px", marginTop: "0px", marginBottom: "5px", marginRight: "10px" }} size="md">
-                            Penalties
-                        </Button>
-                        <p style={{ display: "inline-block", color: "#012169" }}>Points to take off when there is...</p>
                         <Form>
-                            {/* <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Verbose
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                            <Form.Group controlId="formBasicSelect" style={{ marginLeft: "5px", marginTop: "5px", marginRight: "5px", marginBottom: "25px"}}>
+                                <Form.Label style={{ color: "white", fontSize: 30}}>Accuracy Threshold
+                                    <OverlayTrigger placement="top" overlay={renderTooltipAccuracy}>
+                                    <Button style={{ background: "#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px'}}>?</Button>
                                     </OverlayTrigger>
                                 </Form.Label>
-                                <Form.Select onChange={onVerboseChange} style={{ borderRadius: "10px" }}>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </Form.Select>
-                            </Form.Group> */}
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Accuracy Threshold
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
-                                    </OverlayTrigger>
-                                </Form.Label>
-                                <Form.Select onChange={onAccuracyChange} style={{ borderRadius: "10px" }}>
+                                <Form.Select onChange={onAccuracyChange} style={{ borderRadius: "10px"}}>
                                     <option value="1">1 decimal point</option>
                                     <option value="2">2 decimal points</option>
                                     <option value="3">3 decimal points</option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Extra Entities
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                            <h3 style={{marginLeft: '5px', color: 'white'}}>   Penalties:</h3>
+                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px", marginBottom: "25px" }}>
+                                <Form.Label style={{ color: "white", fontSize: 30 }}>Extra Entities
+                                    <OverlayTrigger placement="top" overlay={renderTooltipExtraEntities}>
+                                        <Button style={{ background: "#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px'}}>?</Button>
                                     </OverlayTrigger>
                                 </Form.Label>
                                 <Form.Select onChange={onExtraEntitiesChange} style={{ borderRadius: "10px" }}>
@@ -174,10 +185,10 @@ const Assignment = () => {
                                     <option value="10">10 points lost for each extra entity</option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Coloring Errors
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px", marginBottom: "25px" }}>
+                                <Form.Label style={{ color: "white" , fontSize: 30}}>Color Errors
+                                    <OverlayTrigger placement="top" overlay={renderTooltipColor}>
+                                        <Button style={{ background: "#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
                                     </OverlayTrigger>
                                 </Form.Label>
                                 <Form.Select onChange={onColoringChange} style={{ borderRadius: "10px" }}>
@@ -187,10 +198,10 @@ const Assignment = () => {
                                     <option value="25">25% lost for color errors</option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Lineweight Error
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px", marginBottom: "25px" }}>
+                                <Form.Label style={{ color: "white", fontSize: 30 }}>Lineweight Errors
+                                    <OverlayTrigger placement="top" overlay={renderTooltipLineweight}>
+                                        <Button style={{ background: "#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
                                     </OverlayTrigger>
                                 </Form.Label>
                                 <Form.Select onChange={onLineweightChange} style={{ borderRadius: "10px" }}>
@@ -200,36 +211,10 @@ const Assignment = () => {
                                     <option value="25">25% lost for lineweight errors</option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Scaling Error
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
-                                    </OverlayTrigger>
-                                </Form.Label>
-                                <Form.Select onChange={onScalingChange} style={{ borderRadius: "10px" }}>
-                                    <option value="0">no penalty for a scaling error </option>
-                                    <option value="5">5 points lost for a scaling error</option>
-                                    <option value="10">10 points lost for a scaling error</option>
-                                    <option value="15">15 points lost for a scaling error</option>
-                                </Form.Select>
-                            </Form.Group>
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Rotation Error
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
-                                    </OverlayTrigger>
-                                </Form.Label>
-                                <Form.Select onChange={onRotationChange} style={{ borderRadius: "10px" }}>
-                                    <option value="0">no penalty for a rotation error </option>
-                                    <option value="5">5 points lost for a rotation error</option>
-                                    <option value="10">10 points lost for a rotation error</option>
-                                    <option value="15">15 points lost for a rotation error</option>
-                                </Form.Select>
-                            </Form.Group>
-                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" }}>
-                                <Form.Label style={{ color: "#012169" }}>Hatch Error
-                                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                        <Button style={{ background: "#ADD8E6", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px", marginBottom: "25px" }}>
+                                <Form.Label style={{ color: "white", fontSize: 30 }}>Hatching Errors
+                                    <OverlayTrigger placement="top" overlay={renderTooltipHatch}>
+                                        <Button style={{ background: "#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
                                     </OverlayTrigger>
                                 </Form.Label>
                                 <Form.Select onChange={onHatchChange} style={{ borderRadius: "10px" }}>
@@ -239,6 +224,33 @@ const Assignment = () => {
                                     <option value="25">25% lost for hatching errors</option>
                                 </Form.Select>
                             </Form.Group>
+                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" , marginBottom: "25px"}}>
+                                <Form.Label style={{ color: "white", fontSize: 30 }}>Scale Error
+                                    <OverlayTrigger placement="top" overlay={renderTooltipScale}>
+                                        <Button style={{ background: "#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                                    </OverlayTrigger>
+                                </Form.Label>
+                                <Form.Select onChange={onScalingChange} style={{ borderRadius: "10px" }}>
+                                    <option value="0">no penalty for a scaling error </option>
+                                    <option value="5">5 points lost for a scaling error</option>
+                                    <option value="10">10 points lost for a scaling error</option>
+                                    <option value="15">15 points lost for a scaling error</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group controlId="formBasicSelect" style={{ margin: "5px" , marginBottom: "25px"}}>
+                                <Form.Label style={{ color: "white", fontSize: 30 }}>Rotation Error
+                                    <OverlayTrigger placement="top" overlay={renderTooltipRotate}>
+                                        <Button style={{ background:"#012169", padding: "0px", borderRadius: "50%", marginLeft: '10px', paddingLeft: '7px', paddingRight: '7px' }}>?</Button>
+                                    </OverlayTrigger>
+                                </Form.Label>
+                                <Form.Select onChange={onRotationChange} style={{ borderRadius: "10px" }}>
+                                    <option value="0">no penalty for a rotation error </option>
+                                    <option value="5">5 points lost for a rotation error</option>
+                                    <option value="10">10 points lost for a rotation error</option>
+                                    <option value="15">15 points lost for a rotation error</option>
+                                </Form.Select>
+                            </Form.Group>
+
 
                         </Form>
                     </Col>
@@ -254,7 +266,7 @@ const Assignment = () => {
                     <Col style={{ display: 'flex', justifyContent: 'center' }}>
 
                         <Button style={{ background: "#012169", borderRadius: "12px" }} size="lg" onClick={routeChange} className="m-5">
-                            Start grading
+                            Start Grading
                         </Button>
 
 
@@ -265,7 +277,8 @@ const Assignment = () => {
 
 
             </Container >
-        </Form>
+            </div>
+
 
     );
 }

@@ -59,17 +59,15 @@ def grade():
     rot_error=int(request.form["rotationError"])
     correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
     student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
-    print("thresh")
-    print(thresh)
     
     dic = {}
 
 
     for file in student_files:
         for cfile in correct_files:
-            mistakes = []
-            result = grade(student_files[file], correct_files[cfile], verbose, thresh,extra_ent_penalty, 
-            hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error, mistakes)
+            #mistakes = []
+            result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh,extra_ent_penalty, 
+            hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
             dic[file] = [result, mistakes]
 
     #print(dic)
@@ -465,10 +463,25 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                     student_lines.append(lin_s)
                     lin_flag = True
                     if not case3a or not case3b:
-                        correct - ((color_error_penalty/100) * 1)
+                        correct -= ((color_error_penalty/100) * 1)
+                        print("current correct: ", correct)
+                        if not case3a:
+                            print("line color error (type1)");
+                            mistakes.append(["Incorrect color:", "It should be " + str(entities_correct["Layers"][lin_c["layer"]]["color"]) + ", but it is " + str(entities_student["Layers"][lin_s["layer"]]["color"])])
+                        if not case3b:
+                            print("line color error (type2)");
+                            mistakes.append(["Incorrect color:", "It should be " + str(lin_c["color"]) + ", but it is " + str(lin_s["color"])])
                         color_error = True
                     if not case4a or not case4b:
-                        correct - ((lw_error_penalty/100) * 1)
+                        correct -= ((lw_error_penalty/100) * 1)
+                        print("current correct: ", correct)
+                        if not case4b:
+                            print("lineweight error (type1)");
+                            mistakes.append(["Incorrect lineweight: ", "It should be " + str(entities_correct["Layers"][lin_c["layer"]]["lineweight"]) + ", but it is " + str(entities_student["Layers"][lin_s["layer"]]["lineweight"])])
+                        if not case4a:
+                            print("lineweight error (type2)");
+                            mistakes.append(["Incorrect lineweight: ", "It should be " + str(lin_c["lineweight"]) + ", but it is " + str(lin_s["lineweight"])])
+
                         lw_error = True
                     break
         if not lin_flag:
@@ -479,11 +492,11 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not lin_flag:
-                mistakes.append(["missing Line", lin_c])
-                print("missing Line: ",lin_c)
-            else:
-                if verbose==2:
-                    print("found Line: ",lin_c)
+                mistakes.append(["Missing Line: ", lin_c])
+                # print("missing Line: ",lin_c)
+            # else:
+            #     if verbose==2:
+                    # print("found Line: ",lin_c)
 #    Now go through each line in the student file and see if it was added to the list of correct lines
 #    if there is a line that was not correct, it will be considered extra and points will be deducted
     for lin_s in entities_student["Lines"]:
@@ -491,8 +504,8 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         if lin_s not in student_lines:
             extra_ents = extra_ents + 1
             if verbose!=0:
-                mistakes.append(["extra Line: ",lin_s])
-                print("extra Line: ",lin_s)
+                mistakes.append(["Extra Line: ",lin_s])
+                # print("extra Line: ",lin_s)
     while extra_ents != 0 and lin_flags !=0:
         extra_ents = extra_ents -1
         lin_flags = lin_flags -1
@@ -531,10 +544,26 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                     student_arcs.append(arc_s)
                     arc_flag = True
                     if not case4a or not case4b:
-                        correct - ((color_error_penalty/100) * 1)
+                        correct -= ((color_error_penalty/100) * 1)
+                        print("current correct: ", correct)
+                        if not case4a:
+                            print("line color error (type1)");
+                            mistakes.append(["Incorrect color: ", "It should be " + str(entities_correct["Layers"][arc_c["layer"]]["color"]) + ", but it is " + str(entities_student["Layers"][arc_s["layer"]]["color"])])
+                        if not case4b:
+                            print("line color error (type2)");
+                            mistakes.append(["Incorrect color: ", "It should be " + str(arc_c["color"]) + ", but it is " + str(arc_s["color"])])
+
                         color_error = True
                     if not case5a or not case5b:
-                        correct - ((lw_error_penalty/100) * 1)
+                        correct -= ((lw_error_penalty/100) * 1)
+                        print("current correct: ", correct)
+                        if not case5b:
+                            print("lineweight error (type1)");
+                            mistakes.append(["Incorrect lineweight: ", "It should be " + str(entities_correct["Layers"][arc_c["layer"]]["lineweight"]) + ", but it is " + str(entities_student["Layers"][arc_s["layer"]]["lineweight"])])
+                        if not case5a:
+                            print("lineweight error (type2)");
+                            mistakes.append(["Incorrect lineweight: ", "It should be " + str(arc_c["lineweight"]) + ", but it is " + str(arc_s["lineweight"])])
+
                         lw_error= True
                     break
         if not arc_flag:
@@ -544,11 +573,11 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not arc_flag:
-                mistakes.append(["missing Arc: ",arc_c])
-                print("missing Arc: ",arc_c)
-            else:
-                if verbose==2:
-                    print("found Arc: ",arc_c)
+                mistakes.append(["Missing Arc: ",arc_c])
+                # print("missing Arc: ",arc_c)
+            # else:
+            #     if verbose==2:
+                    # print("found Arc: ",arc_c)
 #    Now go through each arc in the student file and see if it was added to the list of correct arcs
 #    if there is a arc that was not correct, it will be considered extra and points will be deducted
     for arc_s in entities_student["Arcs"]:
@@ -556,8 +585,8 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
         if arc_s not in student_arcs:
             extra_ents = extra_ents +1
             if verbose!=0:
-                mistakes.append(["extra Arc: ",arc_s])
-                print("extra Arc: ",arc_s)
+                mistakes.append(["Extra Arc: ",arc_s])
+                # print("extra Arc: ",arc_s)
     while extra_ents != 0 and arc_flags !=0:
         extra_ents = extra_ents -1
         arc_flags = arc_flags -1
@@ -602,15 +631,34 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             case4a = entities_student["Layers"][cir_s["layer"]]["lineweight"] == entities_correct["Layers"][cir_c["layer"]]["lineweight"]
             case3b = cir_s["color"] == cir_c["color"]
             case4b = cir_s["lineweight"] == cir_c["lineweight"]
+            print(case1 and case2 and (cir_s not in student_circs))
             if case1 and case2 and (cir_s not in student_circs):
                 correct+=1
                 student_circs.append(cir_s)
                 cir_flag = True
                 if not case3a or not case3b:
-                    correct - ((color_error_penalty/100) * 1)
+                    correct -= ((color_error_penalty/100) * 1)
+                    print("current correct: ", correct)
+                    #modified
+                    if not case3a:
+                        print("line color error (type1)");
+                        mistakes.append(["Incorrect color: ", "It should be " + str(entities_correct["Layers"][cir_c["layer"]]["color"]) + ", but it is " + str(entities_student["Layers"][cir_s["layer"]]["color"])])
+                    if not case3b:
+                        print("line color error (type2)");
+                        mistakes.append(["Incorrect color: ", "It should be " + str(cir_c["color"]) + ", but it is " + str(cir_s["color"])])
+
                     color_error = True
                 if not case4a or not case4b:
-                    correct - ((lw_error_penalty/100) * 1)
+                    correct -= ((lw_error_penalty/100) * 1)
+                    print("current correct: ", correct)
+                    #modified
+                    if not case4a:
+                        print("lineweight error (type1)");
+                        mistakes.append(["Incorrect lineweight: ", "It should be " + str(entities_correct["Layers"][cir_c["layer"]]["lineweight"]) + ", but it is " + str(entities_student["Layers"][cir_s["layer"]]["lineweight"])])
+                    if not case4b:
+                        print("lineweight error (type2)");
+                        mistakes.append(["Incorrect lineweight: ", "It should be " + str(cir_c["lineweight"]) + ", but it is " + str(cir_s["lineweight"])])
+
                     lw_error = True
                 break
         if not cir_flag:
@@ -619,18 +667,19 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not cir_flag:
-                mistakes.append(["missing Circle: ",cir_c])
-                print("missing Circle: ",cir_c)
-            else:
-                if verbose==2:
-                    print("found Circle: ",cir_c)
+                print('missing circle here')
+                mistakes.append(["Missing Circle: ",cir_c])
+                # print("missing Circle: ",cir_c)
+            # else:
+            #     if verbose==2:
+                    # print("found Circle: ",cir_c)
     for cir_s in entities_student["Circles"]:
         cir_s = entities_student["Circles"][cir_s]
         if cir_s not in student_circs:
             extra_ents = extra_ents +1
             if verbose!=0:
-                mistakes.append(["extra Circle: ",cir_s])
-                print("extra Circle: ",cir_s)
+                mistakes.append(["Extra Circle: ",cir_s])
+                # print("extra Circle: ",cir_s)
     while extra_ents != 0 and circ_flags !=0:
         extra_ents = extra_ents -1
         circ_flags = circ_flags -1
@@ -690,10 +739,24 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                 student_ellipses.append(ell_s)
                 ell_flag = True
                 if not case4a or not case4b:
-                    correct - ((color_error_penalty/100) * 1)
+                    correct -= ((color_error_penalty/100) * 1)
+                    print("current correct: ", correct)
+                    if not case4a:
+                        print("line color error (type1)");
+                        mistakes.append(["Incorrect color: ", "It should be " + str(entities_correct["Layers"][ell_c["layer"]]["color"]) + ", but it is " + str(entities_student["Layers"][ell_s["layer"]]["color"])])
+                    if not case4b:
+                        print("line color error (type2)");
+                        mistakes.append(["Incorrect color: ", "It should be " + str(ell_c["color"]) + ", but it is " + str(ell_s["color"])])
                     color_error = True
                 if not case5a or not case5b:
-                    correct - ((lw_error_penalty/100) * 1)
+                    correct -= ((lw_error_penalty/100) * 1)
+                    print("current correct: ", correct)
+                    if not case5a:
+                        print("lineweight error (type1)");
+                        mistakes.append(["Incorrect lineweight: ", "It should be " + str(entities_correct["Layers"][ell_c["layer"]]["lineweight"]) + ", but it is " + str(entities_student["Layers"][ell_s["layer"]]["lineweight"])])
+                    if not case5b:
+                        print("lineweight error (type2)");
+                        mistakes.append(["Incorrect lineweight: ", "It should be " + str(ell_c["lineweight"]) + ", but it is " + str(ell_s["lineweight"])])
                     lw_error = True
                 break
         if not ell_flag:
@@ -702,18 +765,18 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
             missing_ents = missing_ents +1
         if verbose!=0:
             if not ell_flag:
-                mistakes.append(["missing Ellipse: ",ell_c])
-                print("missing Ellipse: ",ell_c)
-            else:
-                if verbose==2:
-                    print("found Ellipse: ",ell_c)
+                mistakes.append(["Missing Ellipse: ",ell_c])
+                # print("missing Ellipse: ",ell_c)
+            # else:
+            #     if verbose==2:
+                    # print("found Ellipse: ",ell_c)
     for ell_s in entities_student["Ellipses"]:
         ell_s = entities_student["Ellipses"][ell_s]
         if ell_s not in student_ellipses:
             extra_ents = extra_ents +1
             if verbose!=0:
-                mistakes.append(["extra Ellipse: ",ell_s])
-                print("extra Ellipse: ",ell_s)
+                mistakes.append(["Extra Ellipse: ",ell_s])
+                # print("extra Ellipse: ",ell_s)
     while extra_ents != 0 and ell_flags !=0:
         extra_ents = extra_ents -1
         ell_flags = ell_flags -1
@@ -746,11 +809,15 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                         flag = True
                         pat_flag = True
                         if pattern_s != pattern_c:
-                            correct - ((hatch_error_penalty/100) * 1)
+                            correct -= ((hatch_error_penalty/100) * 1)
+                            print("current correct: ", correct)
+                            #mistakes.append(["incorrect hatch" + "It should be " + pattern_c + ", but it is " + pattern_s, ell_s["center"], ""])
                             pattern_error = True
                             samePattern = False
                         if color_s != color_c:
-                            correct - ((color_error_penalty/100) * 1)
+                            correct -= ((color_error_penalty/100) * 1)
+                            print("current correct: ", correct)
+                            #mistakes.append(["incorrect color" + "It should be " + color_c + ", but it is " + color_s, ""])
                             color_error = True
                             sameColor = False
                         break
@@ -759,39 +826,41 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                     break
             if verbose!=0:
                 if not samePattern:
-                    mistakes.append(["missing pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"]])
-                    print("missing pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"])
-                else:
-                    if verbose == 2:
-                        print("found pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"])
+                    mistakes.append(["Missing pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"]])
+                    # print("missing pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"])
+                # else:
+                #     if verbose == 2:
+                        # print("found pattern: " ,entities_correct["Hatches"][hatch_c][path_c]["Pattern"])
                 if not samePattern:
-                    mistakes.append(["missing color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"]])
-                    print("missing color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"])
-                else:
-                    if verbose == 2:
-                        print("found color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"])
+                    mistakes.append(["Missing color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"]])
+                    # print("missing color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"])
+                # else:
+                #     if verbose == 2:
+                        # print("found color: " ,entities_correct["Hatches"][hatch_c][path_c]["Color"])
                 if not pat_flag:
-                    mistakes.append(["missing Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c]])
-                    print("missing Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c])
-                else:
-                    if verbose==2:
-                        print("found Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c])
+                    mistakes.append(["Missing hatch area: ",entities_correct["Hatches"][hatch_c][path_c]])
+                    # print("missing Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c])
+                # else:
+                #     if verbose==2:
+                        # print("found Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c])
                         
     for hatch_s in entities_student["Hatches"]:
         for path_s in entities_student["Hatches"][hatch_s]:
             if path_s not in student_hatches:
                 if verbose!=0:
-                    mistakes.append(["extra Hatch Area: ",entities_student["Hatches"][hatch_s][path_s]])
-                    print("extra Hatch Area: ",entities_student["Hatches"][hatch_s][path_s])
+                    mistakes.append(["Extra Hatch Area: ",entities_student["Hatches"][hatch_s][path_s]])
+                    # print("extra Hatch Area: ",entities_student["Hatches"][hatch_s][path_s])
 #    no negative grades, and return a percentage]
     if rotations/ln_count >.50:
         rotation= True
     correct = max(correct,0)
+    print("correct: ", correct, " count: ", ent_count, " extra entities: ", extra_ents, " extra entities penalty: ", extra_ent_penalty)
     return [round(((correct/ent_count)*100))- ((extra_ents * extra_ent_penalty)), rotation]
 
 # function to grade two dxf files
 
-def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error, mistakes):
+def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error):
+    final_mistakes = []
     possible_angles = []
     maxScore=0
     correctFactor = 0
@@ -805,22 +874,29 @@ def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_er
     for factor in factors:
         if factor != 0:
             stu_ents = scale(student_ents, factor)
+            mistakes = []
             score, rot  = (grade_ents(stu_ents, correct_ents, factor, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, mistakes))
         if score> maxScore and score<101:
+            final_mistakes = mistakes
             maxScore = score
             correctFactor = factor
             trueRot = rot
     final_score = maxScore
+    print("factor ", correctFactor)
+    print("thresh ", thresh-1)
+    print("round ", round(correctFactor, thresh-1))
     if round(correctFactor, thresh-1) !=1:
         final_score = final_score - scaling_error
-        if verbose == 2:
-            print("Scaling error. File needed to be scaled by a factor of: " + str(correctFactor))
+        mistakes.append(["Scaling Error: ", "File needed to be scaled by a factor of " + str(correctFactor)])
+        # if verbose == 2:
+            # print("Scaling error. File needed to be scaled by a factor of: " + str(correctFactor))
     if trueRot is True:
         final_score = final_score - rot_error
-        if verbose == 2:
-            print("Rotation error.")
+        mistakes.append(["Rotation Error: ", ""])
+        # if verbose == 2:
+            # print("Rotation error.")
 
-    return max(final_score, 0)
+    return max(final_score, 0), final_mistakes
 
 if __name__ == "__main__":
     app.run(debug=True)

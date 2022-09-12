@@ -4,6 +4,7 @@ import { ListGroup } from 'react-bootstrap';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { CSVLink } from "react-csv";
+import image from "./garden2.png"
 
 const Result = () => {
     const { state } = useLocation();
@@ -24,7 +25,13 @@ const Result = () => {
 
 
     return (
+        <div>
         <Container className="mt-3 mb-3">
+            <Row>
+                <Col style={{ display: 'flex', justifyContent: 'center', margin: "5px" }}>
+                    <h1 style={{ color: "white", marginTop: '30px' }}>CAD Autograder</h1>
+                </Col>
+            </Row>
             <Row>
                 <Col style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button style={{ background: "#012169", borderRadius: "10px" }} onClick={routeChange} className="m-3">
@@ -32,8 +39,8 @@ const Result = () => {
                     </Button>
                 </Col>
                 <Col style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button style={{ background: "#012169", borderRadius: "10px" }} className="m-3">
-                        <CSVLink data={csvData} style={{ color: "white" }}>Download as excel</CSVLink>
+                    <Button style={{ background: "#012169", borderRadius: "10px"}} className="m-3">
+                        <CSVLink data={csvData} style={{ color: "white", textDecoration: 'none' }}>Download as excel</CSVLink>
                     </Button>
                 </Col>
 
@@ -43,13 +50,9 @@ const Result = () => {
                 <ListGroup>
                     {elements}
                 </ListGroup>
-
             </Row>
-
-            <ListGroup>
-                {elements}
-            </ListGroup>
         </Container>
+        </div>
     )
 }
 export default Result
