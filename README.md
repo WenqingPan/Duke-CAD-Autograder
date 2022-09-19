@@ -13,7 +13,7 @@ Original Flask + React setup is referenced from this Youtube tutorial: https://w
 
 First, git clone the repository
 ### back-end setup
-go to back-end folder
+go to back-end folder\
 step1: ```python3 -m venv venv```\
 step2: ```source venv/bin/activate```\
 step3: ```python3 server.py```
