@@ -20,16 +20,15 @@ step3: ```python3 server.py```
 
 ### front-end setup
 go to front-end folder
-step1: ```npm install```
-step2: ```npm run start```
-A localhost page would be generated automatically after the command above
+step1: ```npm install```\
+step2: ```npm run start```\
+A localhost page would be generated automatically after the command above\
 
 ## Debug the VM
 If the front-end is working and the back-end server stops running, try the following:
 step1: ssh into the vm and go to the back-end folder flask-server
-step2: ```python3 -m venv venv```
-step3: ```. venv/bin/activate```
-step4: ```pip install gunicorn flask ezdxf flask_cors numpy```
-step5: ```gunicorn --bind 127.0.0.1:5000 server:app --daemon```
---daemon is the command to run the backend server forever.
-```
+step2: ```python3 -m venv venv```\
+step3: ```. venv/bin/activate```\
+step4: ```pip install gunicorn flask ezdxf flask_cors numpy```\
+step5: ```gunicorn --bind 127.0.0.1:5000 server:app --daemon```\
+--daemon is the command to run the backend server forever.\
