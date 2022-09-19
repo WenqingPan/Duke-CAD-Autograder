@@ -1,11 +1,11 @@
 import { useLocation } from 'react-router-dom'
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { ListGroup } from 'react-bootstrap';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import image from "./garden2.png"
+import { Container, Row, Col, Card } from 'react-bootstrap';
+
 const Stats = () => {
     const { state } = useLocation();
-    //a list of student scores
+    //tracking the list of student scores
     const grade = []
     //frequency map for student mistakes (# of students, not # of occurrences)
     const mistakes = new Map();
@@ -13,6 +13,7 @@ const Stats = () => {
     let filenameWithLowestScore = [Object.keys(state)[0]]
     let minGrade = state[filenameWithLowestScore][0]
     let maxGrade = minGrade;
+    //calculate the max score and the min score
     for (const [key, value] of Object.entries(state)) {
         const currGrade = value[0]
         if (currGrade < minGrade) {
@@ -35,14 +36,8 @@ const Stats = () => {
         for (const mistake of uniqueMistake) {
             mistakes.set(mistake, (mistakes.get(mistake) || 0) + 1);
         }
-
-
     }
-    console.log(filenameWithHighestScore)
-    console.log(filenameWithLowestScore)
-    console.log(minGrade)
-    console.log(maxGrade)
-
+    // calculate the median score
     const calculateMedian = values => {
         values.sort(function (a, b) {
             return a - b;
@@ -56,6 +51,7 @@ const Stats = () => {
         return (values[half - 1] + values[half]) / 2.0;
     }
     const medianScore = calculateMedian(grade)
+    //calculate the average score
     const calculateAverageScore = grade => grade.reduce((a, b) => a + b) / grade.length;
     const averageScore = calculateAverageScore(grade)
     const data = []
@@ -64,9 +60,7 @@ const Stats = () => {
     }
     grade.forEach(score => {
         const index = parseInt((score - minGrade) / 5);
-        console.log(index)
         data[index]['freq'] = data[index]['freq'] + 1
-        console.log(data[index]['freq'])
     });
     let freqList = []
     for (const [key, value] of mistakes) {
@@ -114,7 +108,7 @@ const Stats = () => {
 
                 </Col>
                 <Col>
-
+                    {/*grade distribution visualization*/}
                     <Row>
                         <BarChart width={600} height={600} data={data} margin={{
                             top: 5,
@@ -135,15 +129,7 @@ const Stats = () => {
         </Container>
         </div >
 
-
-
-
-
-
-
     );
-
-
 
 }
 export default Stats

@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import image from "./garden2.png"
 
 
 const Assignment = () => {
@@ -20,22 +19,38 @@ const Assignment = () => {
     const [hatchError, setHatchError] = useState(0)
     const [studentFileStatus, setStudentFileStatus] = useState(false)
     const [correctFileStatus, setCorrectFileStatus] = useState(false)
-    const onStudentFileChange = event => {
-        const files = event.target.files
-        console.log(files.length)
-        for (let i = 0; i < files.length; i++) {
-            setStudentFile(studentFile => { return [...studentFile, files[i]] })
-        }
-        setStudentFileStatus(true)
-    }
+
+    var tempCorrect = false;
+    var tempStudent = false;
+
     const onCorrectFileChange = event => {
         const files = event.target.files
-        console.log(files.length)
+        //store correct file
         for (let i = 0; i < files.length; i++) {
             setCorrectFile(correctFile => { return [...correctFile, files[i]] })
         }
+        //if(setStudentFileStatus) {
         setCorrectFileStatus(true)
+        //}
     }
+
+    const onStudentFileChange = event => {
+        const files = event.target.files
+        //store student files
+        for (let i = 0; i < files.length; i++) {
+            setStudentFile(studentFile => { return [...studentFile, files[i]] })
+        }
+
+            setStudentFileStatus(true)
+        
+        
+    }
+
+    if(setStudentFile && setCorrectFile){
+        tempCorrect = true;
+        tempStudent = false;
+    }
+    
     const onAccuracyChange = event => {
         setAccuracyThreshold(event.target.value)
     }
@@ -54,9 +69,6 @@ const Assignment = () => {
     const onRotationChange = event => {
         setRotationError(event.target.value)
     }
-    // const onVerboseChange = event => {
-    //     setVerbose(event.target.value)
-    // }
     const onHatchChange = event => {
         setHatchError(event.target.value)
     }
@@ -104,15 +116,12 @@ const Assignment = () => {
         formData.append('rotationError', rotationError)
         formData.append('verbose', verbose)
         formData.append('hatchError', hatchError)
-        console.log("verbose")
-        console.log(verbose)
-        console.log("accuracy")
-        console.log(accuracyThreshold)
 
 
-
+        //API call to the backend Flask file (server.py)
         axios.post("/grade", formData)
             .then(res => {
+                //nagivate to the result page with the score data obtained from backend algorithm
                 navigate("/result", { state: res.data });
             })
             .catch(error => {
@@ -126,6 +135,9 @@ const Assignment = () => {
                     <Col style={{ display: 'flex', justifyContent: 'center', margin: "5px" }}>
                         <h1 style={{ color: "white", marginTop: '30px'}}>CAD Autograder</h1>
                     </Col>
+                    
+                    <h4 style={{ color: "white" , textAlign: "center", textSize: "20px", visibility: (correctFileStatus || studentFileStatus ? "visible" : "hidden")}}>upload both sets!</h4>
+
                 </Row>
                 <Row>
                     <Col md={{ span: 6, offset: 3 }} style={{ display: 'flex', justifyContent: 'left', alignItems: 'center' }}>
@@ -136,7 +148,7 @@ const Assignment = () => {
                                 background: "#012169", color: "white", padding: "8px 12px", borderRadius: "12px", marginBottom: '5px', whiteSpace: 'nowrap',
                                 textAlign: 'center'
                             }}>Select Solution File:</Form.Label><br/>
-                            <p style={{ margin: "5px", color: "white", visibility: (correctFileStatus ? "visible" : "hidden"), whiteSpace: 'nowrap' }}>success!</p>
+                            {<p style={{ margin: "5px", color: "white", visibility: (correctFileStatus ? "visible" : "hidden"), whiteSpace: 'nowrap' }}>success!</p>}
                             <Form.Control type="file" value="" onChange={onCorrectFileChange} id="filename2" style={{ visibility: "hidden", maxHeight: '1px !important', maxWidth: '1px !important'}} />            
                         </Form.Group>
                     </Col>
@@ -156,6 +168,7 @@ const Assignment = () => {
                         </Form.Group>
                     </Col>
                 </Row>
+
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
                         <Form>
@@ -256,30 +269,16 @@ const Assignment = () => {
                     </Col>
                 </Row>
 
-
-
-
-
-
-
                 <Row style={{ display: 'flex', justifyContent: 'center' }}>
                     <Col style={{ display: 'flex', justifyContent: 'center' }}>
 
                         <Button style={{ background: "#012169", borderRadius: "12px" }} size="lg" onClick={routeChange} className="m-5">
                             Start Grading
                         </Button>
-
-
-
                     </Col>
-
                 </Row>
-
-
             </Container >
             </div>
-
-
     );
 }
 export default Assignment

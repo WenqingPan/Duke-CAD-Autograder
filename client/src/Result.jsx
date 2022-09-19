@@ -4,23 +4,20 @@ import { ListGroup } from 'react-bootstrap';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { CSVLink } from "react-csv";
-import image from "./garden2.png"
 
 const Result = () => {
     const { state } = useLocation();
-    console.log("result")
-    console.log(state)
     var elements = []
     const navigate = useNavigate();
     const csvData = [["File name", "Grade"]]
-
+    //output a list of student file name with its corresponding score
     for (const [key, value] of Object.entries(state)) {
         csvData.push([key, value[0]])
         elements.push(<ListGroup.Item style={{ display: 'flex', justifyContent: 'space-between' }}><div className="fw-bold">{key} </div><div>Score: {value[0]} <Link style={{ marginLeft: '15px' }} to='/detail' state={{ state: { filename: key, detail: state } }}><BsFillArrowRightCircleFill /></Link></div></ListGroup.Item>)
     }
+    //route to the stats page if button is clicked
     const routeChange = () => {
         navigate("/stats", { state: state });
-
     }
 
 

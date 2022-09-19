@@ -29,8 +29,7 @@ if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
-# run source venv/bin/activate
-#python3 server.py
+#API for calculating the CAD file score
 @app.route('/grade', methods = ['POST'])
 def grade():
     rcorrect_files=[]
@@ -59,18 +58,15 @@ def grade():
     rot_error=int(request.form["rotationError"])
     correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
     student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
-    
+    #storing the file score and mistakes in this dictionary below
     dic = {}
 
 
     for file in student_files:
         for cfile in correct_files:
-            #mistakes = []
             result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh,extra_ent_penalty, 
             hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
             dic[file] = [result, mistakes]
-
-    #print(dic)
 
     response = flask.jsonify(dic)
     response.headers.add('Access-Control-Allow-Origin', '*')
