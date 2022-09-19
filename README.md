@@ -6,7 +6,7 @@ at Duke University under the supervision of Professor Rabih Younes. It has been 
 http://vcm-20929.vm.duke.edu/. Please email jw716@duke.edu if you have any questions about the code or the usage.
 
 ## Virtual machine access
-People with root access to the vcm-20929 server can make edits to the code that will be reflected in the web app. The current web application is running from the folder jw716/CAD-React-Flask. To edit the front-end files, go to folder client and make the changes. Once changes are saved locally, run "npm run build" to create a build directory. To edit the back-end files, go to folder flask-server and simply make the changes and save it. Then use scp command on the local terminal to send the updated folder to the destination on the vm. The changes would be automatically reflected on the web application.
+People with root access to the vcm-20929 server can make edits to the code that will be reflected in the web app. **Currently, the web application is running from the folder ```jw716/CAD-React-Flask```**. (It might be moved to another folder in the vm in future) To edit the front-end files, go to folder client and make the changes. Once changes are saved locally, run "npm run build" to create a build directory. To edit the back-end files, go to folder flask-server and simply make the changes and save it. Then use scp command on the local terminal to send the updated folder to the destination on the vm. The changes would be automatically reflected on the web application.
 
 ## Run the web application locally
 Original Flask+React setup is referenced from this Youtube tutorial: https://www.youtube.com/watch?v=7LNl2JlZKHA&t=133s
