@@ -12,7 +12,7 @@ People with root access to the vcm-20929 server can make edits to the code that 
 Original Flask+React setup is referenced from this Youtube tutorial: https://www.youtube.com/watch?v=7LNl2JlZKHA&t=133s
 
 First, git clone the repository
-###back-end setup
+### back-end setup
 ```
 go to back-end folder
 step1: python3 -m venv venv
@@ -20,7 +20,7 @@ step2: source venv/bin/activate
 step3: python3 server.py
 ```
 
-###front-end setup
+### front-end setup
 ```
 go to front-end folder
 step1: npm install
