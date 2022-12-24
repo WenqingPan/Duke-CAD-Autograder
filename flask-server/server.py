@@ -32,45 +32,54 @@ app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 #API for calculating the CAD file score
 @app.route('/grade', methods = ['POST'])
 def grade():
-    rcorrect_files=[]
-    rstudent_files=[]
-    raw_student_files =request.files.getlist("student_files")
-    raw_correct_files=request.files.getlist("correct_files")
-    for file in raw_student_files:
-        if file:
-            filename=secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-            rstudent_files.append(filename)
-    for file in raw_correct_files:
-        if file:
-            filename=secure_filename(file.filename)
-            file.save(os.path.join(app.config['CORRECT_FOLDER'],filename))
-            rcorrect_files.append(filename)
+    try:
+        print("grading \n")
+        s
+        rcorrect_files=[]
+        rstudent_files=[]
+        raw_student_files =request.files.getlist("student_files")
+        raw_correct_files=request.files.getlist("correct_files")
+        for file in raw_student_files:
+            if file:
+                filename=secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+                rstudent_files.append(filename)
+        for file in raw_correct_files:
+            if file:
+                filename=secure_filename(file.filename)
+                file.save(os.path.join(app.config['CORRECT_FOLDER'],filename))
+                rcorrect_files.append(filename)
 
 
-    thresh=int(request.form["accuracyThreshold"])
-    extra_ent_penalty = int(request.form["extraEntities"])
-    hatch_error_penalty = int(request.form["hatchError"])
-    color_error_penalty = int(request.form["coloringError"])
-    lw_error_penalty = int(request.form["lineweightError"])
-    verbose=int(request.form["verbose"])
-    scaling_error=int(request.form["scalingError"])
-    rot_error=int(request.form["rotationError"])
-    correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
-    student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
-    #storing the file score and mistakes in this dictionary below
-    dic = {}
+        thresh=int(request.form["accuracyThreshold"])
+        extra_ent_penalty = int(request.form["extraEntities"])
+        hatch_error_penalty = int(request.form["hatchError"])
+        color_error_penalty = int(request.form["coloringError"])
+        lw_error_penalty = int(request.form["lineweightError"])
+        verbose=int(request.form["verbose"])
+        scaling_error=int(request.form["scalingError"])
+        rot_error=int(request.form["rotationError"])
+        correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
+        student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
+        #storing the file score and mistakes in this dictionary below
+        dic = {}
 
 
-    for file in student_files:
-        for cfile in correct_files:
-            result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh,extra_ent_penalty, 
-            hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
-            dic[file] = [result, mistakes]
+        for file in student_files:
+            for cfile in correct_files:
+                result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh, extra_ent_penalty,
+                hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
+                dic[file] = [result, mistakes]
 
-    response = flask.jsonify(dic)
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+        response = flask.jsonify(dic)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except Exception as e:
+        print("an error has occured\n")
+        file1 = open("logerror.txt", "a")  # append mode this one logs the error
+        file1.write(str(e),"\n")
+        file1.close()
+        #log the error message
 
 
 # gets the area of a polygon defined by sets of xy coordinates
@@ -144,6 +153,7 @@ def get_hatch_area(hatches):
 #caant area polyline hatches
 # extract the information about each entity we care about from the dxf file and creates an entity dictionary
 def get_ents(dxf):
+  #  print("reached get ents")
     header_var_count = len(dxf.header)
     layer_count = len(dxf.layers)
     block_definition_count = len(dxf.blocks)
@@ -167,6 +177,50 @@ def get_ents(dxf):
             line["color"] = i.dxf.color
             ents["Lines"]["Line "+str(count)] = line
             count += 1
+    Polyline = [entity for entity in dxf.modelspace() if entity.dxftype() == 'POLYLINE']
+    ents["Polyline"]={}
+    if (Polyline!=[]):
+        count = 0
+        for i in Polyline:
+            if not (i.is_2d_polyline):
+                print("this is 3D")
+                break
+            polyline = {}
+            polyline["layer"] = i.dxf.layer
+            polyline["default_start_width"] = i.dxf.default_start_width
+            polyline["default_end_width"] = i.dxf.default_end_width
+            polyline["m_count"] = i.dxf.m_count
+            polyline["n_count"] = i.dxf.n_count
+            polyline["m_smooth_density"] = i.dxf.m_smooth_density
+            polyline["n_smooth_density"] = i.dxf.n_smooth_density
+            polyline["smooth_type"] = i.dxf.smooth_type
+            polyline["lineweight"] = i.dxf.lineweight
+            polyline["color"] = i.dxf.color
+            ents["Polyline"]["Polyline "+str(count)] = polyline
+            count+=1
+        #print("count:")
+        #print(count)
+    #print (ents["Polyline"])
+
+    Spline = [entity for entity in dxf.modelspace() if entity.dxftype() == 'SPLINE']
+    ents["Spline"]={}
+    if (Spline!=[]):
+        count = 0
+        for i in Spline:
+            spline = {}
+            spline["layer"] = i.dxf.layer
+            spline["degree"] = i.dxf.degree
+            spline["flags"] = i.dxf.flags
+            spline["n_knots"] = i.dxf.n_knots
+            spline["n_fit_points"] = i.dxf.n_fit_points
+            spline["n_control_points"] = i.dxf.n_control_points
+            spline["knot_tolerance"] = i.dxf.knot_tolerance
+            spline["fit_tolerance"] = i.dxf.fit_tolerance
+            spline["control_point_tolerance"] = i.dxf.control_point_tolerance
+            spline["color"] = i.dxf.color
+            ents["Spline"]["Spline "+str(count)] = spline
+            count+=1
+            
     Arc = [entity for entity in dxf.modelspace() if entity.dxftype() == 'ARC']
     ents["Arcs"] = {}
     if (Arc != []):
@@ -269,8 +323,8 @@ def get_ents(dxf):
             #                 edges["Edge "+str(count_edge)]["is CCW?"] = edge.ccw
             #             count_edge += 1
             #         hats["Path "+str(count_path)]["Edges"] = edges
-                
-            #         hats["Path "+str(count_path)]["area"] = get_area(hats["Path "+str(count_path)])           
+
+            #         hats["Path "+str(count_path)]["area"] = get_area(hats["Path "+str(count_path)])
             #         count_path += 1
            # ents["Hatches"]["Hatch "+str(count)] = hats
            count = 0
@@ -286,7 +340,7 @@ def get_ents(dxf):
             layer["color"] = i.color
             ents["Layers"][i.dxf.name] = layer
             count += 1
-    return ents        
+    return ents
 
 def distl(lin):
     return lin["distance"]
@@ -379,7 +433,7 @@ def find_factor(entities_student, entities_correct,thresh):
     factors.append(ell_factor)
     x=0
     return factors
-   
+
 def scale(entity_dict, factor):
     ents = copy.deepcopy(entity_dict)
     for lin in ents["Lines"]:
@@ -399,7 +453,7 @@ def scale(entity_dict, factor):
         ell["center"][0], ell["center"][1] = factor * ell["center"][0], factor * ell["center"][1]
         ell["major axis"][0], ell["major axis"][1] = factor * ell["major axis"][0], factor * ell["major axis"][1]
         ell["minor axis"][0], ell["minor axis"][1] = factor * ell["minor axis"][0], factor * ell["minor axis"][1]
-    
+
     return ents
 
 # The function that takes two entity dictionaries and compares them to produce a grade
@@ -416,10 +470,10 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
     ell_flags=0
     rotation= False
     rotations = 0
-    
+
 
 #    list to ensure each line is counted only once and also to check for extra lines
-    
+
     student_lines = []
     for x in range(0,len(entities_correct["Lines"])):
         lin_c = ((entities_correct["Lines"]["Line " + str(x)]))
@@ -530,7 +584,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                     else:
                         case3= False
                 else:
-                    case3 = True            
+                    case3 = True
                 case4a = entities_student["Layers"][arc_s["layer"]]["color"] == entities_correct["Layers"][arc_c["layer"]]["color"]
                 case5b = entities_student["Layers"][arc_s["layer"]]["lineweight"] == entities_correct["Layers"][arc_c["layer"]]["lineweight"]
                 case4b = arc_s["color"] == arc_c["color"]
@@ -725,7 +779,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                     else:
                         case3 = False
                 else:
-                    case3 = True                     
+                    case3 = True
             case4a = entities_student["Layers"][ell_s["layer"]]["color"] == entities_correct["Layers"][ell_c["layer"]]["color"]
             case5a = entities_student["Layers"][ell_s["layer"]]["lineweight"] == entities_correct["Layers"][ell_c["layer"]]["lineweight"]
             case4b = ell_s["color"] == ell_c["color"]
@@ -776,7 +830,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
     while extra_ents != 0 and ell_flags !=0:
         extra_ents = extra_ents -1
         ell_flags = ell_flags -1
-    
+
 
 #    see description above for line and arc
     student_hatches = []
@@ -817,7 +871,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                             color_error = True
                             sameColor = False
                         break
-                    
+
                 if flag:
                     break
             if verbose!=0:
@@ -839,7 +893,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
                 # else:
                 #     if verbose==2:
                         # print("found Hatch Area: ",entities_correct["Hatches"][hatch_c][path_c])
-                        
+
     for hatch_s in entities_student["Hatches"]:
         for path_s in entities_student["Hatches"][hatch_s]:
             if path_s not in student_hatches:
@@ -850,6 +904,7 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
     if rotations/ln_count >.50:
         rotation= True
     correct = max(correct,0)
+  #  extra_ent_penalty = 0
     print("correct: ", correct, " count: ", ent_count, " extra entities: ", extra_ents, " extra entities penalty: ", extra_ent_penalty)
     return [round(((correct/ent_count)*100))- ((extra_ents * extra_ent_penalty)), rotation]
 
