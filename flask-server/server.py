@@ -198,9 +198,7 @@ def get_ents(dxf):
             polyline["color"] = i.dxf.color
             ents["Polyline"]["Polyline "+str(count)] = polyline
             count+=1
-        #print("count:")
-        #print(count)
-    #print (ents["Polyline"])
+        
 
     Spline = [entity for entity in dxf.modelspace() if entity.dxftype() == 'SPLINE']
     ents["Spline"]={}
