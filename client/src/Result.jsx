@@ -37,7 +37,7 @@ const Result = () => {
                 </Col>
                 <Col style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button style={{ background: "#012169", borderRadius: "10px"}} className="m-3">
-                        <CSVLink data={csvData} style={{ color: "white", textDecoration: 'none' }}>Download as excel</CSVLink>
+                        <CSVLink data={csvData} style={{ color: "white", textDecoration: 'none' }}>Export CSV</CSVLink>
                     </Button>
                 </Col>
 
