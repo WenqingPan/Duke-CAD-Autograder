@@ -1,4 +1,4 @@
-# ECE568 Prework Set Up Guide
+# CAD Autograder Prework Set Up Guide
 
 > If you intend to develop on your own computer. Just skip the "1. Reserve a Virtual Machine".
 
