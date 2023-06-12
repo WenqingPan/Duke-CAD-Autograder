@@ -20,6 +20,10 @@ const Result = () => {
         navigate("/stats", { state: state });
     }
 
+    const routeHome = () => {
+        navigate("/");
+    }
+
 
     return (
         <div>
@@ -33,6 +37,11 @@ const Result = () => {
                 <Col style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button style={{ background: "#012169", borderRadius: "10px" }} onClick={routeChange} className="m-3">
                         See more stats
+                    </Button>
+                </Col>
+                <Col style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button style={{ background: "BLACK", borderRadius: "10px" }} onClick={routeHome} className="m-3">
+                        Back to Home
                     </Button>
                 </Col>
                 <Col style={{ display: 'flex', justifyContent: 'center' }}>
