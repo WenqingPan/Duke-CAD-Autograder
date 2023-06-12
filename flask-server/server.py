@@ -34,7 +34,7 @@ app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 def grade():
     try:
         print("grading \n")
-        s
+        
         rcorrect_files=[]
         rstudent_files=[]
         raw_student_files =request.files.getlist("student_files")
