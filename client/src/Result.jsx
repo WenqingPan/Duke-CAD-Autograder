@@ -1,12 +1,14 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { ListGroup } from 'react-bootstrap';
+import { message } from "antd";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { CSVLink } from "react-csv";
 
 const Result = () => {
     const { state } = useLocation();
+    console.log(state)
     var elements = []
     const navigate = useNavigate();
     const csvData = [["File name", "Grade"]]
@@ -15,8 +17,23 @@ const Result = () => {
         csvData.push([key, value[0]])
         elements.push(<ListGroup.Item style={{ display: 'flex', justifyContent: 'space-between' }}><div className="fw-bold">{key} </div><div>Score: {value[0]} <Link style={{ marginLeft: '15px' }} to='/detail' state={{ state: { filename: key, detail: state } }}><BsFillArrowRightCircleFill /></Link></div></ListGroup.Item>)
     }
+    
     //route to the stats page if button is clicked
     const routeChange = () => {
+        try {
+            if(elements.length === 0){
+                message.warning({
+                content: "The selected file doesn't contain a .dxf file",
+                className: "custom-class",
+                style: {
+                    marginTop: "20vh",
+                },
+                });
+                return;
+            }
+        } catch (error) {
+            //handle error here
+        }
         navigate("/stats", { state: state });
     }
 
@@ -54,7 +71,7 @@ const Result = () => {
             </Row>
             <Row>
                 <ListGroup>
-                    {elements}
+                    {elements} 
                 </ListGroup>
             </Row>
         </Container>
