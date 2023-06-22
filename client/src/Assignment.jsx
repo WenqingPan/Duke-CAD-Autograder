@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Form, Container, Row, Col, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { message } from "antd";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
@@ -98,6 +99,33 @@ const Assignment = () => {
     const navigate = useNavigate();
 
     const routeChange = () => {
+
+        //prevent the user to continue without uploading any files
+        try {
+            if(correctFile.length === 0){
+                message.warning({
+                  content: "Please upload Solution Files.",
+                  className: "custom-class",
+                  style: {
+                    marginTop: "20vh",
+                  },
+                });
+                return;
+            }
+            if(studentFile.length === 0){
+                message.warning({
+                  content: "Please upload Student Files/Directory.",
+                  className: "custom-class",
+                  style: {
+                    marginTop: "20vh",
+                  },
+                });
+                return;
+            }
+        } catch (error) {
+            // handle error here
+        }
+
         const formData = new FormData()
         for (let i = 0; i < studentFile.length; i++) {
             const file = studentFile[i]
