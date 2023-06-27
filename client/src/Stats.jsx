@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { ListGroup } from 'react-bootstrap';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 const Stats = () => {
     const { state } = useLocation();
@@ -67,6 +68,10 @@ const Stats = () => {
         freqList.push(<ListGroup.Item style={{ display: 'flex', justifyContent: 'space-between' }}><div>{key}</div><div> {value} people</div></ListGroup.Item>)
     }
 
+    const navigate = useNavigate();
+    const routeHome = () => {
+        navigate("/");
+    }
 
     return (
         <div>
@@ -126,6 +131,13 @@ const Stats = () => {
 
                 </Col>
             </Row>
+                <Row>
+                    <Col style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button style={{ background: "BLACK", borderRadius: "10px" }} onClick={routeHome} className="m-3">
+                        Back to Home
+                        </Button>
+                    </Col>
+                </Row>  
         </Container>
         </div >
 

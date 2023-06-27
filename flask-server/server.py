@@ -15,6 +15,8 @@ import numpy as np
 import copy
 import argparse
 
+# Problem: Line 35, 164, 181
+
 app = Flask(__name__)
 CORS(app)
 
@@ -30,11 +32,21 @@ if not os.path.isdir(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 #API for calculating the CAD file score
+# ? the upload file is a single file rather than a list while the function treat it as a list.
+"""
+@Description: API for calculating the CAD file score.
+                1. Read student file and correct file, save them to their own directory
+                2. Read the grading criteria
+                3. Run Grade function
+                4. Generate response and return to the 
+@Param: POST Request with 2 dxf file and penalty parameters
+@Returns: Grade Response including score and error list.
+"""
 @app.route('/grade', methods = ['POST'])
 def grade():
     try:
         print("grading \n")
-        s
+        # read and save the student file and correct answer
         rcorrect_files=[]
         rstudent_files=[]
         raw_student_files =request.files.getlist("student_files")
@@ -50,7 +62,7 @@ def grade():
                 file.save(os.path.join(app.config['CORRECT_FOLDER'],filename))
                 rcorrect_files.append(filename)
 
-
+        # read the penalty.
         thresh=int(request.form["accuracyThreshold"])
         extra_ent_penalty = int(request.form["extraEntities"])
         hatch_error_penalty = int(request.form["hatchError"])
@@ -59,14 +71,14 @@ def grade():
         verbose=int(request.form["verbose"])
         scaling_error=int(request.form["scalingError"])
         rot_error=int(request.form["rotationError"])
+
         correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
         student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
         #storing the file score and mistakes in this dictionary below
         dic = {}
 
-
         for file in student_files:
-            for cfile in correct_files:
+            for cfile in correct_files: 
                 result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh, extra_ent_penalty,
                 hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
                 dic[file] = [result, mistakes]
@@ -77,13 +89,18 @@ def grade():
     except Exception as e:
         print("an error has occured\n")
         file1 = open("logerror.txt", "a")  # append mode this one logs the error
-        file1.write(str(e),"\n")
+        file1.write((str(e)+"\n"))
         file1.close()
         #log the error message
 
 
 # gets the area of a polygon defined by sets of xy coordinates
 # xy[:,0] are the x values, and xy[:,1] are the y values
+"""
+@Description: gets the area of a polygon defined by sets of xy coordinates
+@Param: xy: N * 2 list which row 1 specify coordinate x and row 2 specify coordinate y
+@Returns: area of polygon
+"""
 def poly_area(xy):
     l = len(xy)
     s = 0.0
@@ -144,6 +161,7 @@ def get_area(path):
 
 # gets the areas of hatch objects defined either by PolyLine Paths or edges which can be lines, arcs, or ellipse arcs
 # hatches is the hatch portion of the entities dictionary made by get_ents()
+# ? The function is no longer used anymore
 def get_hatch_area(hatches):
     area = 0
     for hatch in hatches:
@@ -151,9 +169,16 @@ def get_hatch_area(hatches):
             area += get_area(hatches[hatch][path])
     return round(area, 5)
 #caant area polyline hatches
-# extract the information about each entity we care about from the dxf file and creates an entity dictionary
+
+"""
+@Description: extract the information about each entity we care about 
+              from the dxf file and creates an entity dictionary
+@Param: dxf object
+@Returns: entity dictionary
+"""
 def get_ents(dxf):
   #  print("reached get ents")
+    # ? variables never used
     header_var_count = len(dxf.header)
     layer_count = len(dxf.layers)
     block_definition_count = len(dxf.blocks)
@@ -342,9 +367,18 @@ def get_ents(dxf):
 
 def distl(lin):
     return lin["distance"]
+
 def dista(arc):
     return arc["radius"]
-def find_factor(entities_student, entities_correct,thresh):
+
+"""
+@Description: find correct factor by comparing the correct and student entities
+@Param: entities_student: entities from the student dxf. 
+        entities_correct: entities from the correct dxf.
+        thresh: precision   
+@Returns:   List contains correct factors
+"""
+def find_factor(entities_student, entities_correct, thresh):
     factors=[]
     correct_lines = []
     line_factor = 0
@@ -432,29 +466,40 @@ def find_factor(entities_student, entities_correct,thresh):
     x=0
     return factors
 
+"""
+@Description: scale the entity dict by factor
+@Param: entity dict, scale factor
+@Returns: scaled entity dict
+"""
 def scale(entity_dict, factor):
     ents = copy.deepcopy(entity_dict)
     for lin in ents["Lines"]:
         lin = ents["Lines"][lin]
         lin["start"][0], lin["start"][1] = factor * lin["start"][0], factor * lin["start"][1]
         lin["end"][0], lin["end"][1] = factor * lin["end"][0], factor * lin["end"][1]
+
     for arc in ents["Arcs"]:
         arc = ents["Arcs"][arc]
         arc["radius"] = factor * arc["radius"]
         arc["center"][0], arc["center"][1] = factor * arc["center"][0], factor * arc["center"][1]
+
     for cir in ents["Circles"]:
         cir = ents["Circles"][cir]
         cir["center"][0], cir["center"][1] = factor * cir["center"][0], factor * cir["center"][1]
         cir["radius"] = factor * cir["radius"]
+
     for ell in ents["Ellipses"]:
         ell = ents["Ellipses"][ell]
         ell["center"][0], ell["center"][1] = factor * ell["center"][0], factor * ell["center"][1]
         ell["major axis"][0], ell["major axis"][1] = factor * ell["major axis"][0], factor * ell["major axis"][1]
         ell["minor axis"][0], ell["minor axis"][1] = factor * ell["minor axis"][0], factor * ell["minor axis"][1]
-
     return ents
 
-# The function that takes two entity dictionaries and compares them to produce a grade
+"""
+@Description: The function that takes two entity dictionaries and compares them to produce a grade
+@Param: student and correct entity, grade and penalty parameters
+@Returns: [grades, rotation] list
+"""
 def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, mistakes):
 #    the threshold for how similar two values must be to be considered the same
     ent_count = 0
@@ -468,7 +513,6 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
     ell_flags=0
     rotation= False
     rotations = 0
-
 
 #    list to ensure each line is counted only once and also to check for extra lines
 
@@ -906,8 +950,11 @@ def grade_ents(entities_student, entities_correct, factor, verbose, thresh, extr
     print("correct: ", correct, " count: ", ent_count, " extra entities: ", extra_ents, " extra entities penalty: ", extra_ent_penalty)
     return [round(((correct/ent_count)*100))- ((extra_ents * extra_ent_penalty)), rotation]
 
-# function to grade two dxf files
-
+"""
+@Description: function to grade two dxf files
+@Param: student and correct dxf files, grade and penalty parameters
+@Returns: score: int indicates final grade, final_mistakes: list of the final mistake
+"""
 def grade(dxf_student, dxf_correct, verbose, thresh, extra_ent_penalty, hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error):
     final_mistakes = []
     possible_angles = []
