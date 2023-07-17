@@ -9,3 +9,25 @@
 [2023-07-12 17:52:13 -0400] [13878] [ERROR] Connection in use: ('127.0.0.1', 5000)
 [2023-07-12 17:52:13 -0400] [13878] [ERROR] Retrying in 1 second.
 [2023-07-12 17:52:14 -0400] [13878] [ERROR] Can't connect to ('127.0.0.1', 5000)
+[2023-07-17 14:26:30 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:30 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:31 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:31 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:32 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:32 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:33 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:33 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:34 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:34 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:35 -0400] [3945] [ERROR] Can't connect to ('127.0.0.1', 5000)
+[2023-07-17 14:26:44 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:44 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:45 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:45 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:46 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:46 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:47 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:47 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:48 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:48 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:49 -0400] [3975] [ERROR] Can't connect to ('127.0.0.1', 5000)

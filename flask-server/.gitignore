@@ -3,3 +3,5 @@ correct/
 student/
 venv/
 test/
+logs/
+*.pyc
