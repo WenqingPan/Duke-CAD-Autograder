@@ -146,7 +146,7 @@ const Assignment = () => {
         formData.append('hatchError', hatchError)
 
         //API call to the backend Flask file (server.py)
-        axios.post("/grade", formData)
+        axios.post("http://localhost:5000/grade", formData)
             .then(res => {
                 //nagivate to the result page with the score data obtained from backend algorithm
                 navigate("/result", { state: res.data });

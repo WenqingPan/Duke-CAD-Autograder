@@ -9,6 +9,7 @@
 [2023-07-12 17:52:13 -0400] [13878] [ERROR] Connection in use: ('127.0.0.1', 5000)
 [2023-07-12 17:52:13 -0400] [13878] [ERROR] Retrying in 1 second.
 [2023-07-12 17:52:14 -0400] [13878] [ERROR] Can't connect to ('127.0.0.1', 5000)
+<<<<<<< HEAD
 [2023-07-23 16:00:19 -0400] [55042] [WARNING] Worker with pid 55052 was terminated due to signal 9
 [2023-07-23 16:00:19 -0400] [55042] [WARNING] Worker with pid 55053 was terminated due to signal 9
 [2023-07-23 16:09:28 -0400] [57775] [ERROR] Connection in use: ('127.0.0.1', 5000)
@@ -440,3 +441,27 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
     raise TypeError(
 TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+=======
+[2023-07-17 14:26:30 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:30 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:31 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:31 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:32 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:32 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:33 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:33 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:34 -0400] [3945] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:34 -0400] [3945] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:35 -0400] [3945] [ERROR] Can't connect to ('127.0.0.1', 5000)
+[2023-07-17 14:26:44 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:44 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:45 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:45 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:46 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:46 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:47 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:47 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:48 -0400] [3975] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-17 14:26:48 -0400] [3975] [ERROR] Retrying in 1 second.
+[2023-07-17 14:26:49 -0400] [3975] [ERROR] Can't connect to ('127.0.0.1', 5000)
+>>>>>>> 2950bc43599b62c07b4349e185201aee32058cf6
