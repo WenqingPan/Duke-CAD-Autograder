@@ -9,3 +9,434 @@
 [2023-07-12 17:52:13 -0400] [13878] [ERROR] Connection in use: ('127.0.0.1', 5000)
 [2023-07-12 17:52:13 -0400] [13878] [ERROR] Retrying in 1 second.
 [2023-07-12 17:52:14 -0400] [13878] [ERROR] Can't connect to ('127.0.0.1', 5000)
+[2023-07-23 16:00:19 -0400] [55042] [WARNING] Worker with pid 55052 was terminated due to signal 9
+[2023-07-23 16:00:19 -0400] [55042] [WARNING] Worker with pid 55053 was terminated due to signal 9
+[2023-07-23 16:09:28 -0400] [57775] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-23 16:09:28 -0400] [57775] [ERROR] Retrying in 1 second.
+[2023-07-23 16:09:29 -0400] [57775] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-23 16:09:29 -0400] [57775] [ERROR] Retrying in 1 second.
+[2023-07-23 16:09:30 -0400] [57775] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-23 16:09:30 -0400] [57775] [ERROR] Retrying in 1 second.
+[2023-07-23 16:09:31 -0400] [57775] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-23 16:09:31 -0400] [57775] [ERROR] Retrying in 1 second.
+[2023-07-23 16:09:32 -0400] [57775] [ERROR] Connection in use: ('127.0.0.1', 5000)
+[2023-07-23 16:09:32 -0400] [57775] [ERROR] Retrying in 1 second.
+[2023-07-23 16:09:33 -0400] [57775] [ERROR] Can't connect to ('127.0.0.1', 5000)
+[2023-07-26 14:45:08,929] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:09,844] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:10,934] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:11,173] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:11,198] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:11,345] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:11,832] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:11,987] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:12,139] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:12,295] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:12,422] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:12,545] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:54,124] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:55,505] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:55,673] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:56,177] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:56,328] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:56,461] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:56,605] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:45:59,624] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:47:21,088] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:50:03,599] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-07-26 14:51:14,337] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:37,242] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:38,987] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:39,204] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:39,287] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:39,484] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:39,639] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:39,781] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:39,977] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:40,098] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:58,362] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:22:59,808] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-14 14:23:00,046] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-16 14:00:51,603] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-16 14:00:51,654] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.
+[2023-08-16 14:05:07,442] ERROR in app: Exception on /grade [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'grade' did not return a valid response. The function either returned None or ended without a return statement.

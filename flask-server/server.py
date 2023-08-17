@@ -73,25 +73,35 @@ def grade():
         rot_error=int(request.form["rotationError"])
 
         correct_files = { filename:ezdxf.readfile(CORRECT_FOLDER + "/" + filename) for filename in rcorrect_files if filename.__contains__(".dxf")}
-        student_files = { filename:ezdxf.readfile(UPLOAD_FOLDER + "/" + filename) for filename in rstudent_files if filename.__contains__(".dxf")}
-        #storing the file score and mistakes in this dictionary below
+        student_files = {}
         dic = {}
-
+        for filename in rstudent_files:
+            if filename.__contains__(".dxf"):
+                try:
+                    student_files[filename] = ezdxf.readfile(UPLOAD_FOLDER + "/" + filename)
+                except Exception as e:
+                    dic[filename] = [-1, [['Error', {'parse error': str(e)}]]]
+        #storing the file score and mistakes in this dictionary below
         for file in student_files:
-            for cfile in correct_files: 
-                result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh, extra_ent_penalty,
-                hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
+            for cfile in correct_files:
+                try:
+                    result, mistakes = grade(student_files[file], correct_files[cfile], verbose, thresh, extra_ent_penalty,
+                    hatch_error_penalty, color_error_penalty, lw_error_penalty, scaling_error, rot_error)
+                    print(mistakes)
+                except Exception as e:
+                    result = -1
+                    mistakes = [['Error', {'grading error': str(e)}]]
                 dic[file] = [result, mistakes]
-
-        response = flask.jsonify(dic)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
     except Exception as e:
+        dic[filename] = [-1, [['Error', {'unknown error': str(e)}]]]
         print("an error has occured\n")
         file1 = open("logerror.txt", "a")  # append mode this one logs the error
         file1.write((str(e)+"\n"))
         file1.close()
-        #log the error message
+    
+    response = flask.jsonify(dic)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 # gets the area of a polygon defined by sets of xy coordinates

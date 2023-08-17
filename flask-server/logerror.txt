@@ -1,0 +1,42 @@
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+division by zero
+[Errno 13] Permission denied: '/home/hy201/CAD-React-Flask/flask-server/student/New_folder_b.dxf'
+[Errno 13] Permission denied: '/home/hy201/CAD-React-Flask/flask-server/student/New_folder_b.dxf'
+File '/home/hy201/CAD-React-Flask/flask-server/correct/dsada.dxf' is not a DXF file.
+File '/home/hy201/CAD-React-Flask/flask-server/correct/dsada.dxf' is not a DXF file.
+File '/home/hy201/CAD-React-Flask/flask-server/correct/dsada.dxf' is not a DXF file.
+[Errno 13] Permission denied: '/home/hy201/CAD-React-Flask/flask-server/correct/Gyroscope.dxf'
+[Errno 13] Permission denied: '/home/hy201/CAD-React-Flask/flask-server/correct/Gyroscope.dxf'
